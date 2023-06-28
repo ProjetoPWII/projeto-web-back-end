@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Paciente {
+  cpf         String
+  nome        String
+  idade       Int
+  numero_sus  String   @id
+  endereco    Endereco @relation(fields: [endereco_id], references: [id])
+  endereco_id String
+  sexo        String
+
+  ficha    FichaAcompanhamento[]
+  Consulta Consulta[]
+  foto_perfil String
+  senha       String
+
+  @@map("pacientes")
+}
+
+model Medico {
+  cpf             String
+  nome            String
+  idade           Int
+  sexo            String
+  crm             String            @id
+  endereco        Endereco          @relation(fields: [endereco_id], references: [id])
+  endereco_id     String
+  Consulta        Consulta[]
+  Plantao         Plantao[]
+  PostInformativo PostInformativo[]
+  foto_perfil String
+  senha       String
+  @@map("medicos")
+}
+
+model Endereco {
+  id     String @id @default(uuid())
+  cidade String
+  estado String
+  bairro String
+  rua    String
+
+  paciente Paciente[]
+  medico   Medico[]
+  clinica  Clinica[]
+
+  @@map("enderecos")
+}
+
+model Clinica {
+  cnpj        String   @id @default(uuid())
+  nome        String
+  endereco    Endereco @relation(fields: [endereco_id], references: [id])
+  endereco_id String
+
+  @@map("clinica")
+}
+
+model FichaAcompanhamento {
+  id         String   @id @default(uuid())
+  paciente   Paciente @relation(fields: [numero_sus], references: [numero_sus])
+  numero_sus String
+
+  consulta Consulta[]
+
+  @@map("fichas")
+}
+
+model Consulta {
+  id             String              @id @default(uuid())
+  status         String
+  ficha          FichaAcompanhamento @relation(fields: [id_ficha], references: [id])
+  id_ficha       String
+  sus            Paciente            @relation(fields: [numero_sus], references: [numero_sus])
+  numero_sus     String
+  crm            Medico              @relation(fields: [medico_crm], references: [crm])
+  medico_crm     String
+  plantao        Plantao             @relation(fields: [data_plantao], references: [data])
+  data_plantao   DateTime
+  StatusPaciente StatusPaciente[]
+  Prescricoes    Prescricoes[]
+
+  @@map("consultas")
+}
+
+model Plantao {
+  data             DateTime   @id
+  medico           Medico     @relation(fields: [medico_crm], references: [crm])
+  medico_crm       String
+  Consulta         Consulta[]
+  num_atendimentos Int
+
+  @@map("plantoes")
+}
+
+model StatusPaciente {
+  id               String   @id @default(uuid())
+  observacoes      String
+  pressao_arterial Float
+  peso             Float
+  consulta         Consulta @relation(fields: [id_consulta], references: [id])
+  id_consulta      String
+
+  @@map("status_pacientes")
+}
+
+model Prescricoes {
+  consulta            Consulta              @relation(fields: [id_consulta], references: [id])
+  id_consulta         String
+  orientacoes         String
+  atestado_medico     Boolean
+  id                  String                @id @default(uuid())
+  PrescricaoMedicacao PrescricaoMedicacao[]
+
+  @@map("prescricoes")
+}
+
+model Medicacao {
+  nome                String
+  id                  String                @id @default(uuid())
+  PrescricaoMedicacao PrescricaoMedicacao[]
+
+  @@map("medicacoes")
+}
+
+model PrescricaoMedicacao {
+  prescricao    Prescricoes @relation(fields: [id_prescricao], references: [id])
+  id_prescricao String
+  medicacao     Medicacao   @relation(fields: [id_medicacao], references: [id])
+  qtde_caixas   Int
+  id_medicacao  String
+  id            String      @id @default(uuid())
+
+  @@map("prescricoes_medicacoes")
+}
+
+model PostInformativo {
+  id         String   @id @default(uuid())
+  titulo     String
+  descricao  String
+  data       DateTime
+  medico     Medico   @relation(fields: [medico_crm], references: [crm])
+  medico_crm String
+
+  @@map("posts")
+}
