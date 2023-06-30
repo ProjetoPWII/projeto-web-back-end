@@ -1,28 +1,38 @@
-import { Router, Request, Response } from "express";
-import { PacienteController } from "./controllers/userPaciente/PacienteController";
-import { AuthPacienteController } from "./controllers/userPaciente/AuthPacienteController";
-import { EnderecoController } from "./controllers/endereco/EnderecoController";
-import { MedicoController } from "./controllers/userMedico/MedicoController";
-import { AuthMedicoController } from "./controllers/userMedico/AuthMedicoController";
-import { DetailMedicoController } from "./controllers/userMedico/DetailMedicoController";
-import { DetailPacienteController } from "./controllers/userPaciente/DetailPacienteController";
+import { Router } from "express";
 import { checkAuthenticationPaciente } from "./middlewares/checkAuth";
 import { checkAuthenticationMed } from "./middlewares/checkAuthMed";
-import { FichaController } from "./controllers/ficha/FichaController";
-import { PlantaoController } from "./controllers/plantao/PlantaoController";
-import { ConsultaController } from "./controllers/consulta/ConsultaController";
-import { PrescricoesController } from "./controllers/prescricoes/PrescricoesController";
-import { StatusPacienteController } from "./controllers/statusPaciente/StatusPacienteController";
-import { MedicacaoController } from "./controllers/medicacao/MedicacaoController";
-import { PrescricoesMedController } from "./controllers/prescricoesMed/PrescricoesMedController";
 
+import {
+    PacienteController,
+    AuthPacienteController,
+    EnderecoController,
+    MedicoController,
+    AuthMedicoController,
+    DetailMedicoController,
+    DetailPacienteController,
+    FichaController,
+    PlantaoController,
+    ConsultaController,
+    PrescricoesController,
+    StatusPacienteController,
+    MedicacaoController,
+    PrescricoesMedController,
+  } from "./imports";
+  
+import uploadConfig from './config/multer';
+
+import multer from "multer";
 
 const router = Router()
 
-router.post('/paciente', new PacienteController().handlePaciente)
+
+const upload = multer(uploadConfig.upload("./images"))
+
+
+router.post('/paciente', upload.single('foto_perfil'), new PacienteController().handlePaciente)
 router.post('/login', new AuthPacienteController().loginPaciente)
 router.get('/paciente/detail', checkAuthenticationPaciente, new DetailPacienteController().handle)
-router.post('/paciente/edit', checkAuthenticationPaciente, new PacienteController().updatePaciente)
+router.post('/paciente/edit', upload.single('foto_perfil'), checkAuthenticationPaciente, new PacienteController().updatePaciente)
 
 
 router.post('/medico', new MedicoController().handleMedico)
@@ -68,4 +78,4 @@ router.get('/medicacoes-prescritas/all', new PrescricoesMedController().FindAll)
 router.get('/medicacoes-prescritas/:id', new PrescricoesMedController().FindById)
 
 
-export {router}
+export { router }
