@@ -39,10 +39,11 @@ class AuthMedService{
       })
  
       return {
-        numero_sus:user.crm,
+        crm:user.crm,
         nome:user.nome,
-        endereco:user.endereco_id,
-        foto:user.foto_perfil,
+        endereco_id:user.endereco_id,
+        foto_perfil:user.foto_perfil,
+        sexo:user.sexo,
         token:token
       }
     }

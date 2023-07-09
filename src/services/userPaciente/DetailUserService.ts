@@ -14,6 +14,7 @@ class DetailUserService{
               nome:true,
               idade:true,
               endereco_id:true,
+              foto_perfil:true,
               sexo:true,
             }
         }

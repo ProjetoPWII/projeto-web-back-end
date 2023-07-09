@@ -13,7 +13,7 @@ class MedicoController {
         }else{
             const { filename } = req.file
             const createUserService = new MedService()
-            const user = await createUserService.createUser({nome,idade,sexo,endereco_id,crm,cpf,foto_perfil:filename,senha})
+            const user = await createUserService.createUser({nome,idade:parseInt(idade),sexo,endereco_id,crm,cpf,foto_perfil:filename,senha})
     
             return resp.json(user)
         }
@@ -21,7 +21,7 @@ class MedicoController {
      
     }
 
-    async updatePaciente(req: Request, resp: Response) {
+    async updateMedico(req: Request, resp: Response) {
 
         const { nome, idade, sexo, endereco_id, crm, cpf, foto_perfil } = req.body
      

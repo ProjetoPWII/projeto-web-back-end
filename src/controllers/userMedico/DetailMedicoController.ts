@@ -5,7 +5,7 @@ class DetailMedicoController{
 
     async handle(req:Request, resp:Response){
 
-        const user_crm = req.crm
+        const user_crm = req.params.crm
 
         const detailUserService = new DetailMedService()
 

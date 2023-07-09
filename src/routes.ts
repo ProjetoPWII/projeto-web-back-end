@@ -31,13 +31,13 @@ const upload = multer(uploadConfig.upload("./images"))
 
 router.post('/paciente', upload.single('foto_perfil'), new PacienteController().handlePaciente)
 router.post('/login', new AuthPacienteController().loginPaciente)
-router.get('/paciente/detail', checkAuthenticationPaciente, new DetailPacienteController().handle)
+router.get('/paciente/detail/:numero_sus', checkAuthenticationPaciente, new DetailPacienteController().handle)
 router.post('/paciente/edit', upload.single('foto_perfil'), checkAuthenticationPaciente, new PacienteController().updatePaciente)
 
 
-router.post('/medico', new MedicoController().handleMedico)
+router.post('/medico',  upload.single('foto_perfil'),new MedicoController().handleMedico)
 router.post('/loginmedico', new AuthMedicoController().loginMedico)
-router.get('/medico/detail', checkAuthenticationMed, new DetailMedicoController().handle)
+router.get('/medico/detail/:crm', checkAuthenticationMed, new DetailMedicoController().handle)
 
 
 router.post('/endereco', new EnderecoController().handleEndereco)

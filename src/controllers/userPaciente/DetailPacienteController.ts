@@ -5,7 +5,9 @@ class DetailPacienteController{
 
     async handle(req:Request, resp:Response){
 
-        const user_sus = req.numero_sus
+        const user_sus = req.params.numero_sus
+
+        console.log(req.body)
 
         const detailUserService = new DetailUserService()
 
