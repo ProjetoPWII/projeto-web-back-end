@@ -9,14 +9,18 @@ class DetailUserService{
             where:{
                 numero_sus
             },
-            select:{
-              numero_sus:true,
-              nome:true,
-              idade:true,
-              endereco_id:true,
-              foto_perfil:true,
-              sexo:true,
+            include:{
+              endereco:true,
+              Consulta:true
             }
+            // select:{
+            //   numero_sus:true,
+            //   nome:true,
+            //   idade:true,
+            //   endereco_id:true,
+            //   foto_perfil:true,
+            //   sexo:true,
+            // },
         }
       )
      
