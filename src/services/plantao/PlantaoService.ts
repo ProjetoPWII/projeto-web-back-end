@@ -30,7 +30,12 @@ class PlantaoService {
 
 
   async getAll() {
-    const plantao = await prismaClient.plantao.findMany()
+    const plantao = await prismaClient.plantao.findMany({
+      include:{
+        Consulta:true,
+        medico:true
+      }
+    })
     return plantao
   }
 
@@ -38,6 +43,9 @@ class PlantaoService {
     const plantao = await prismaClient.plantao.findUnique({
       where: {
               data
+            },
+            include:{
+              Consulta:true,
             }
     })
     return plantao

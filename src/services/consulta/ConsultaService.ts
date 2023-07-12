@@ -47,7 +47,8 @@ class ConsultaService {
                 numero_sus
             },
             include:{
-                StatusPaciente:true
+                StatusPaciente:true,
+                plantao:true
             }
         })
 
