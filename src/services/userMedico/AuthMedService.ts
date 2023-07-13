@@ -15,6 +15,9 @@ class AuthMedService{
       const user = await prismaClient.medico.findFirst({
         where:{
             crm
+        },
+        include:{
+          endereco:true
         }
       })
 
@@ -44,7 +47,8 @@ class AuthMedService{
         endereco_id:user.endereco_id,
         foto_perfil:user.foto_perfil,
         sexo:user.sexo,
-        token:token
+        token:token,
+        endereco:user.endereco
       }
     }
 }

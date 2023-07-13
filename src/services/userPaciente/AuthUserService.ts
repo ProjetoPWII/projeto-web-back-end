@@ -15,6 +15,9 @@ class AuthUserService{
       const user = await prismaClient.paciente.findFirst({
         where:{
             numero_sus:numero_sus
+        },
+        include:{
+          endereco:true
         }
       })
 
@@ -44,7 +47,8 @@ class AuthUserService{
         endereco_id:user.endereco_id,
         foto_perfil:user.foto_perfil,
         sexo:user.sexo,
-        token:token
+        token:token,
+        endereco:user.endereco
       }
     }
 }
