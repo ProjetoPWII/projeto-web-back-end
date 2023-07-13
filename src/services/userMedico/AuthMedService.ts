@@ -48,7 +48,8 @@ class AuthMedService{
         foto_perfil:user.foto_perfil,
         sexo:user.sexo,
         token:token,
-        endereco:user.endereco
+        endereco:user.endereco,
+        idade:user.idade
       }
     }
 }
