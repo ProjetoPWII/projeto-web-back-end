@@ -22,7 +22,7 @@ app.use((err:Error, req:Request, resp:Response, next:NextFunction)=>{
     if(err instanceof Error){
         return resp.status(400).json({err:err.message})
     }
-
+    console.log(err)
     return resp.status(500).json({
         status:'error',
         message:'Internal server error'

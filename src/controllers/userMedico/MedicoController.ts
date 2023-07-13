@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { MedService } from "../../services/userMedico/MedService";
 import { UpdateMedService } from "../../services/userMedico/UpdateMedService";
+import { handleUpload } from "../../config/multer";
 
 class MedicoController {
 
@@ -13,7 +14,8 @@ class MedicoController {
         }else{
             const { filename } = req.file
             const createUserService = new MedService()
-            const user = await createUserService.createUser({nome,idade:parseInt(idade),sexo,endereco_id,crm,cpf,foto_perfil:filename,senha})
+            const res = await handleUpload(req.session.path)
+            const user = await createUserService.createUser({nome,idade:parseInt(idade),sexo,endereco_id,crm,cpf,foto_perfil: res['secure_url'],senha})
     
             return resp.json(user)
         }

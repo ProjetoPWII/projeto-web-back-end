@@ -32,7 +32,8 @@ export default {
           // handleUpload(`/home/matheusv/Área de Trabalho/projeto-web-back-end/images/${fileName}`)
           // req.session={path:`/home/matheusv/Área de Trabalho/projeto-web-back-end/images/${fileName}`}
           req.session = {
-            path: `/home/leandro/Área de Trabalho/Projeto PW2/projeto-web-back-end/images/${fileName}`,
+           // path: `/home/leandro/Área de Trabalho/Projeto PW2/projeto-web-back-end/images/${fileName}`,
+              path: `/home/matheusv/Área de Trabalho/projeto-web-back-end/images/${fileName}`,
           };
         },
       }),
