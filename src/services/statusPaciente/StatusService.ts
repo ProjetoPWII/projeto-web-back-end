@@ -29,5 +29,48 @@ class StatusService {
         return status
 
  }
+
+
+  async updateStatus({observacoes, pressao_arterial, peso,id_consulta }: StatusRequest){
+
+
+    const status = await prismaClient.statusPaciente.findFirst({
+        where:{
+            id_consulta:id_consulta
+        },
+    })
+
+    console.log(status)
+
+    const id = status ? status.id : 'not-found'
+
+    console.log(id)
+
+
+    const updateStatus = await prismaClient.statusPaciente.upsert({
+        where: {
+            id
+        },
+        update:{
+            observacoes,
+            pressao_arterial,
+            peso,
+        },
+        create: {
+            observacoes,
+            pressao_arterial,
+            peso,
+            id_consulta
+        }
+        // data: {
+        //     observacoes,
+        //     pressao_arterial,
+        //     peso
+        // },
+    })
+
+      return updateStatus
+  }
+
 }
 export {StatusService}

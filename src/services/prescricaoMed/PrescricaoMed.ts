@@ -30,7 +30,12 @@ class PrescricoesMedService {
  }
 
  async getAll(){
-    const prescricoesMed = await prismaClient.prescricaoMedicacao.findMany()
+    const prescricoesMed = await prismaClient.prescricaoMedicacao.findMany({
+        include:{
+            medicacao:true,
+            prescricao:true
+        }
+    })
     return prescricoesMed
  }
 

@@ -18,6 +18,27 @@ class StatusPacienteController {
     }
 
 
+       async handleUpdateStatus(req:Request, res:Response){
+
+           // const {id_ficha} = req.params
+
+           const {observacoes, pressao_arterial, peso, id_consulta} = req.body
+
+           console.log(req.body)
+    
+            const findStatusService = new StatusService()
+    
+            const status = await findStatusService.updateStatus({
+                observacoes,
+                pressao_arterial,
+                peso,
+                id_consulta
+            })
+    
+            return res.json(status)
+        }
+
+
     // async FindAll(req:Request, res:Response){
 
     //    // const {id_ficha} = req.params

@@ -67,9 +67,11 @@ router.get('/consultas/:id_consulta', new ConsultaController().Find_consulta)
 router.post('/prescricao', new PrescricoesController().handlePrescricao)
 router.get('/prescricoes', new PrescricoesController().FindAll)
 router.get('/prescricoes/:id_consulta', new PrescricoesController().FindById)
+router.post('/prescricao/edit', new PrescricoesController().handleUpdatePrescricao)
 
 
 router.post('/status', new StatusPacienteController().handleStatus)
+router.post('/status/update', new StatusPacienteController().handleUpdateStatus)
 
 router.post('/medicacao', new MedicacaoController().handleMedicacao)
 router.get('/medicacoes', new MedicacaoController().FindAll)

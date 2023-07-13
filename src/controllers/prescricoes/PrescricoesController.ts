@@ -18,6 +18,24 @@ class PrescricoesController {
     }
 
 
+
+    async handleUpdatePrescricao(req:Request, res:Response){
+
+        // const {id_ficha} = req.params
+        const {id_consulta, orientacoes, atestado_medico} = req.body
+ 
+         const findPrescricoesService = new PrescricoesService()
+ 
+         const prescricoes = await findPrescricoesService.updatePrescricao({
+            id_consulta,
+            orientacoes,
+            atestado_medico
+         })
+ 
+         return res.json(prescricoes)
+     }
+
+
     async FindAll(req:Request, res:Response){
 
        // const {id_ficha} = req.params
